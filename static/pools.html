@@ -36,8 +36,6 @@
         retrieveDataFromServer("/pools", function () {
           if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             createTable(xmlhttp.responseText);
-          } else {
-            console.log("Error in xmthttp api call:", xmlhttp.responseText);
           }
         });
       }
@@ -106,7 +104,6 @@
         var phoneColumn = document.createElement("TD");
         phoneColumn.style.fontWeight = fontWeight;
         phoneColumn.class = "col px-md-5";
-        console.log('get that d', data.phone)
         var phoneData = document.createTextNode(data.phone);
         phoneColumn.appendChild(phoneData);
         document.getElementById(rowId).appendChild(phoneColumn);

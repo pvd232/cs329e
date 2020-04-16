@@ -94,7 +94,7 @@ def modify_db(record, put=False, post=False, delete=False):
     if post == True:
         try:
             # https://pynative.com/python-mysql-insert-data-into-database-table/
-            mySql_insert_query = """INSERT INTO pool (pool_name, status, pool_type, phone)
+            mySql_insert_query = """INSERT INTO pool (pool_name, status, phone, pool_type)
                                 VALUES (%s, %s, %s, %s) """
             cur.execute(mySql_insert_query, pool_values)
         except mysql.connector.Error as err:
@@ -128,8 +128,9 @@ def add_pool():
     pool = {}
     pool['pool_name'] = request.form['poolName']
     pool['status'] = request.form['status']
-    pool['pool_type'] = request.form['poolType']
     pool['phone'] = request.form['phone']
+    pool['pool_type'] = request.form['poolType']
+    
     
     # Insert into database.
 
