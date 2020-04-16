@@ -10,7 +10,6 @@ from mysql.connector import errorcode
 
 application = Flask(__name__)
 app = application
-all_pools = []
 
 # https://pybit.es/persistent-environment-variables.html
 load_dotenv()
@@ -95,7 +94,7 @@ def modify_db(record, put=False, post=False, delete=False):
     if post == True:
         try:
             # https://pynative.com/python-mysql-insert-data-into-database-table/
-            mySql_insert_query = """INSERT INTO pool (pool_name, status, phone, pool_type)
+            mySql_insert_query = """INSERT INTO pool (pool_name, status, pool_type, phone)
                                 VALUES (%s, %s, %s, %s) """
             cur.execute(mySql_insert_query, pool_values)
         except mysql.connector.Error as err:
@@ -123,35 +122,18 @@ def modify_db(record, put=False, post=False, delete=False):
 
     cnx.commit()
 
-# @app.route('/pools', methods=['POST'])
-# def post_pools():
-#     # https://stackoverflow.com/questions/10434599/get-the-data-received-in-a-flask-request
-#     pool = request.json
-#     response = check_data(pool, post=True)
-#     if response == True:
-#            modify_db(pool, post=True)
-#            return Response(status="201 created")
-           
-#     return Response(status="400 Bad Data",  response=response)
-
 @app.route("/static/add_pool", methods=['POST'])
 def add_pool():
 
-    # Assignment 4: Insert Pool into database.
-    # Extract all the form fields
     pool = {}
     pool['pool_name'] = request.form['poolName']
     pool['status'] = request.form['status']
     pool['pool_type'] = request.form['poolType']
     pool['phone'] = request.form['phone']
-
     
     # Insert into database.
 
     modify_db(pool, post=True)
-    print("Pool Name:" + pool['pool_name'])
-    print("Status:" + pool['status'])
-
 
     return render_template('pool_added.html')
 
@@ -159,16 +141,8 @@ def add_pool():
 @app.route("/pools")
 def get_pools():
     response = {}
-    # Assignment 4: 
-    # Query the database to pull all the pools
-    # Sample pool -- Delete this from final output.
     pools = query_data()
-    print('get_pools pools', pools)
-    # pool['Name'] = 'Barton Springs'
-    # pool['Timings'] = 'Friday - Sunday'
-    # pool['Status'] = 'Open'
-    # all_pools.append(pools)
-    # response['pools'] = pools
+
     return jsonify(pools)
 
 

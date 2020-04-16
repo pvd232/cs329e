@@ -98,6 +98,7 @@
         var statusColumn = document.createElement("TD");
         statusColumn.style.fontWeight = fontWeight;
         statusColumn.class = "col px-md-5";
+        
         var statusData = document.createTextNode(data.status);
         statusColumn.appendChild(statusData);
         document.getElementById(rowId).appendChild(statusColumn);
@@ -105,6 +106,7 @@
         var phoneColumn = document.createElement("TD");
         phoneColumn.style.fontWeight = fontWeight;
         phoneColumn.class = "col px-md-5";
+        console.log('get that d', data.phone)
         var phoneData = document.createTextNode(data.phone);
         phoneColumn.appendChild(phoneData);
         document.getElementById(rowId).appendChild(phoneColumn);
