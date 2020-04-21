@@ -6,16 +6,10 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="./css/styles.css">
   <style type="text/css">
     label {
       font: normal 15px Times New Roman;
-    }
-    h1 {
-      background-color: blueviolet;color: white;
-    }
-    h2 {
-      background-color: blueviolet;color: white;
     }
 
   </style>
@@ -48,7 +42,7 @@
           document.getElementById("error").innerHTML = text;
           return false;
       } else if (phone.length !== 10) {
-        text = "Invalid Phone number. Has to be a 10 digit number without hyphens you fool.";
+        text = "Invalid Phone number. Has to be a 10 digit number without hyphens.";
         document.getElementById("error").innerHTML = text;
         return false;
       }

@@ -14,6 +14,7 @@ app = application
 # https://pybit.es/persistent-environment-variables.html
 load_dotenv()
 
+
 def get_db_creds():
     db = os.getenv("DB", None) or os.environ.get("database", None)
     username = os.getenv("USER", None) or os.environ.get("username", None)
@@ -36,11 +37,12 @@ def instantiate_db_connection():
     if cnx:
         return cnx
 
+
 def create_table():
     # Check if table exists or not. Create and populate it only if it does not exist.
     # https://www.w3schools.com/sql/sql_create_table.asp
     table_ddl = 'CREATE TABLE pool( pool_name VARCHAR(255) NOT NULL, status VARCHAR(255) NOT NULL, phone VARCHAR(255) NOT NULL, pool_type VARCHAR(255) NOT NULL, PRIMARY KEY (pool_name))'
-    
+
     cnx = instantiate_db_connection()
     cur = cnx.cursor()
 
@@ -57,6 +59,7 @@ def create_table():
             cnx.rollback()
             print(err.msg)
 
+
 def query_data(pool_name=None):
     cnx = instantiate_db_connection()
     cur = cnx.cursor(dictionary=True)
@@ -70,10 +73,10 @@ def query_data(pool_name=None):
         except mysql.connector.Error as err:
             cnx.rollback()
             print(err.msg)
-        
+
     else:
         # https://pynative.com/python-mysql-select-query-to-fetch-data/
-        check_for_pool = "select * from pool" 
+        check_for_pool = "select * from pool"
         try:
             cur.execute(check_for_pool)
             record = cur.fetchall()
@@ -81,7 +84,7 @@ def query_data(pool_name=None):
         except mysql.connector.Error as err:
             cnx.rollback()
             print(err.msg)
-        
+
 
 def modify_db(record, put=False, post=False, delete=False):
     pool = record
@@ -100,7 +103,7 @@ def modify_db(record, put=False, post=False, delete=False):
         except mysql.connector.Error as err:
             cnx.rollback()
             print(err.msg)
-        
+
     if put == True:
         # https://pynative.com/python-mysql-update-data/
         pool_values.append(pool_name)
@@ -122,6 +125,7 @@ def modify_db(record, put=False, post=False, delete=False):
 
     cnx.commit()
 
+
 @app.route("/static/add_pool", methods=['POST'])
 def add_pool():
 
@@ -130,8 +134,7 @@ def add_pool():
     pool['status'] = request.form['status']
     pool['phone'] = request.form['phone']
     pool['pool_type'] = request.form['poolType']
-    
-    
+
     # Insert into database.
 
     modify_db(pool, post=True)
@@ -150,6 +153,7 @@ def get_pools():
 @app.route("/")
 def pool_info_website():
     return render_template('index.html')
+
 
 try:
     print("---------" + time.strftime('%a %H:%M:%S'))
